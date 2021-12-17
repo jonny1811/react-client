@@ -1,17 +1,23 @@
 import React from 'react';
-import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
+
+import clsx from 'clsx';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
+
 import List from '@material-ui/core/List';
-import Drawer from '@material-ui/core/Drawer';
 import Divider from '@material-ui/core/Divider';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import IconButton from '@material-ui/core/IconButton';
+import Drawer from '@material-ui/core/Drawer';
+
 import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import IconButton from '@material-ui/core/IconButton';
+
 import { mainListItems, secondaryListItems } from './list-menu-admin';
+import { getUserName } from '../services/auth';
+import logoCompany from '../assets/img/logo-company.png';
 
 const drawerWidth = 240;
 
@@ -103,7 +109,7 @@ export default function MenuAdmin({title}) {
             <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                 {title}
             </Typography>
-          
+            {getUserName()}
             </Toolbar>
         </AppBar>
 
@@ -115,6 +121,7 @@ export default function MenuAdmin({title}) {
             open={open}
         >
             <div className={classes.toolbarIcon}>
+              <img style={{ width: 150, height: 50 }} src={logoCompany} alt="Logo Company" />
             <IconButton onClick={handleDrawerClose}>
                 <ChevronLeftIcon />
             </IconButton>

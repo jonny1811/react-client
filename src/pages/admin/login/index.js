@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,8 +9,15 @@ import Link from '@material-ui/core/Link';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+
 import api from '../../../services/api';
 
 import { login, setUserId, setUserName } from '../../../services/auth';
@@ -50,6 +59,7 @@ export default function SignIn() {
   const classes = useStyles();
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
+  const [ showPassword, setShowPassword ] = useState(false);
 
   async function handleSubmit() {
     await api.post('/api/login', { email, password })
@@ -90,7 +100,7 @@ export default function SignIn() {
             value={email}
             onChange={e => setEmail(e.target.value)}
           />
-          <TextField
+          {/* <TextField
             variant="outlined"
             margin="normal"
             required
@@ -102,7 +112,28 @@ export default function SignIn() {
             autoComplete="current-password"
             value={password}
             onChange={e => setPassword(e.target.value)}
-          />
+          /> */}
+          <FormControl variant="outlined" style={{ width: '100%', marginTop: 10  }}>
+            <InputLabel htmlFor="fieldPassword">Escriba su contraseña</InputLabel>
+            <OutlinedInput
+              id="fieldPassword"
+              type={showPassword ? 'text' : 'password'}
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={e => setShowPassword(!showPassword)}
+                    edge="end"
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              labelWidth={160}
+            />
+          </FormControl>
           <Button
             fullWidth
             variant="contained"
