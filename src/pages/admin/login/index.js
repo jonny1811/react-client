@@ -17,6 +17,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 import api from '../../../services/api';
 
@@ -60,20 +62,29 @@ export default function SignIn() {
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ showPassword, setShowPassword ] = useState(false);
+  const [ loading, setLoading ] = useState(false);
 
   async function handleSubmit() {
+    setLoading(true);
     await api.post('/api/login', { email, password })
-        .then(res => {
-            if (res.status === 200) {
-              login(res.data.token);
-              setUserId(res.data.id);
-              setUserName(res.data.name);
+      .then(res => {
+        if (res.status === 200) {
+          login(res.data.token);
+          setUserId(res.data.id);
+          setUserName(res.data.name);
 
-              window.location.href = '/admin/users';
-            } else {
-                alert('Error en el server');
-            }
-        })
+          window.location.href = '/admin/users';
+          setLoading(false);
+        } else {
+          alert('Error en el server');
+          setLoading(false);
+        }
+      })
+  }
+
+  function loadSubmit() {
+    setLoading(true);
+    setTimeout(() => handleSubmit(), 2000);
   }
 
   return (
@@ -100,19 +111,6 @@ export default function SignIn() {
             value={email}
             onChange={e => setEmail(e.target.value)}
           />
-          {/* <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Escriba su contraseña"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          /> */}
           <FormControl variant="outlined" style={{ width: '100%', marginTop: 10  }}>
             <InputLabel htmlFor="fieldPassword">Escriba su contraseña</InputLabel>
             <OutlinedInput
@@ -140,8 +138,9 @@ export default function SignIn() {
             color="primary"
             className={classes.submit}
             onClick={handleSubmit}
+            disabled={loading}
           >
-            Entrar
+            {loading ? <CircularProgress /> : "ENTRAR"}
           </Button>
           
         
