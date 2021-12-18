@@ -8,6 +8,11 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+
 import MenuAdmin from '../../../components/menu-admin';
 import Footer from '../../../components/footer.admin';
 
@@ -36,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
     flexDirection: 'column',
   },
+  formControl: {
+    width: '100%'
+  }
 }));
 
 export default function UsersRegister() {
@@ -43,13 +51,14 @@ export default function UsersRegister() {
 
   const [ name, setName ] = useState('');
   const [ email, setEmail ] = useState('');
+  const [ type, setType ] = useState('');
   const [ password, setPassword ] = useState('');
   const [ confirmPassword, setconfirmPassword ] = useState('');
 
   async function handleSubmit() {
-    const data = { name, email, password, confirmPassword };
+    const data = { name, email, type, password, confirmPassword };
   
-    if (name !== '' && email !== '' && password !== '' && confirmPassword !== '') {
+    if (name !== '' && email !== '' && type !== '' && password !== '' && confirmPassword !== '') {
       const response = await api.post('/api/register', data);
   
       if (response.status === 200) {
@@ -74,7 +83,7 @@ export default function UsersRegister() {
               <Paper className={classes.paper}>
                 <h2>Registro de Usuario</h2>
                 <Grid container spacing={3}>
-                  <Grid item xs={12} sm={12}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       required
                       id="nombre"
@@ -98,7 +107,21 @@ export default function UsersRegister() {
                       onChange={e => setEmail(e.target.value)}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={3}>
+                  <Grid item xs={12} sm={4}>
+                    <FormControl className={classes.formControl}>
+                      <InputLabel id="labelType">Tipo</InputLabel>
+                      <Select
+                        labelId="labelType"
+                        id="type"
+                        value={type}
+                        onChange={e => setType(e.target.value)}
+                      >
+                        <MenuItem value={1}>Administrador</MenuItem>
+                        <MenuItem value={2}>Funcionario</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12} sm={4}>
                     <TextField
                       type="password"
                       required
@@ -111,7 +134,7 @@ export default function UsersRegister() {
                       onChange={e => setPassword(e.target.value)}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={3}>
+                  <Grid item xs={12} sm={4}>
                     <TextField
                       type="password"
                       required
