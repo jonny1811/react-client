@@ -18,6 +18,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Chip from '@material-ui/core/Chip';
+
 import api from '../../../services/api';
 
 const useStyles = makeStyles((theme) => ({
@@ -89,6 +91,7 @@ export default function UsersList() {
                           <TableRow>
                             <TableCell>Nombre</TableCell>
                             <TableCell align="center">Email</TableCell>
+                            <TableCell align="center">Tipo</TableCell>
                             <TableCell align="center">Fecha de Registro</TableCell>
                             <TableCell align="right">Opciones</TableCell>
                           </TableRow>
@@ -100,6 +103,7 @@ export default function UsersList() {
                                 {row.name}
                               </TableCell>
                               <TableCell align="center">{row.email}</TableCell>
+                              <TableCell align="center">{row.type === 1 ? <Chip label="Administrador" color="primary" /> : <Chip label="Funcionario" color="secondary" />}</TableCell>
                               <TableCell align="center">{new Date(row.createdAt).toLocaleString()}</TableCell>
                               <TableCell align="right">
                                 <ButtonGroup color="primary" aria-label="outlined primary button group">
