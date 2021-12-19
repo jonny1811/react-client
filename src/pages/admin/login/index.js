@@ -29,7 +29,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
-        TEST CaptaHydro using React
+        Curso React con Hooks
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
