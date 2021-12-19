@@ -22,7 +22,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import api from '../../../services/api';
 
-import { login, setUserId, setUserName } from '../../../services/auth';
+import { login, setUserId, setUserName, setUserType } from '../../../services/auth';
 
 function Copyright() {
   return (
@@ -72,6 +72,7 @@ export default function SignIn() {
           login(res.data.token);
           setUserId(res.data.id);
           setUserName(res.data.name);
+          setUserType(res.data.type);
 
           window.location.href = '/admin/users';
           setLoading(false);
@@ -80,11 +81,6 @@ export default function SignIn() {
           setLoading(false);
         }
       })
-  }
-
-  function loadSubmit() {
-    setLoading(true);
-    setTimeout(() => handleSubmit(), 2000);
   }
 
   return (

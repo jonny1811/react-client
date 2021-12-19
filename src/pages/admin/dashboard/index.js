@@ -8,7 +8,12 @@ import Grid from '@material-ui/core/Grid';
 
 import MenuAdmin from '../../../components/menu-admin';
 import Footer from '../../../components/footer.admin';
-import ImgAdmin from '../../../assets/img/admin.png';
+
+import { getUserType } from '../../../services/auth';
+
+import DashFuncionario from './funcionario';
+import DashGerente from './gerente';
+import DashAdmin from './admin';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +40,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function getDashboard() {
+  if (getUserType() === '1') {
+    return <DashAdmin />
+  } else if (getUserType() === '2') {
+    return <DashGerente />
+  } else {
+    return <DashFuncionario />
+  }
+}
+
 export default function Dashboard() {
   const classes = useStyles();
 
@@ -47,7 +62,7 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
-           <img src={ImgAdmin} alt='Imagen de React' />
+            { getDashboard() }
           </Grid>
           <Box pt={4}>
             <Footer />
