@@ -21,6 +21,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Chip from '@material-ui/core/Chip';
 
 import api from '../../../services/api';
+import { getNameType, getNameTypeLabel } from '../../../functions/static_data';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -103,7 +104,7 @@ export default function UsersList() {
                                 {row.name}
                               </TableCell>
                               <TableCell align="center">{row.email}</TableCell>
-                              <TableCell align="center">{row.type === 1 ? <Chip label="Administrador" color="primary" /> : <Chip label="Funcionario" color="secondary" />}</TableCell>
+                              <TableCell align="center">{<Chip label={getNameType(row.type)} color={getNameTypeLabel(row.type)} />}</TableCell>
                               <TableCell align="center">{new Date(row.createdAt).toLocaleString()}</TableCell>
                               <TableCell align="right">
                                 <ButtonGroup color="primary" aria-label="outlined primary button group">

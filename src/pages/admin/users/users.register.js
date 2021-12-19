@@ -117,7 +117,8 @@ export default function UsersRegister() {
                         onChange={e => setType(e.target.value)}
                       >
                         <MenuItem value={1}>Administrador</MenuItem>
-                        <MenuItem value={2}>Funcionario</MenuItem>
+                        <MenuItem value={2}>Gerente</MenuItem>
+                        <MenuItem value={3}>Funcionario</MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>
