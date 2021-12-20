@@ -65,22 +65,30 @@ export default function SignIn() {
   const [ loading, setLoading ] = useState(false);
 
   async function handleSubmit() {
-    setLoading(true);
-    await api.post('/api/login', { email, password })
+    await api.post('/api/session/login', { email, password })
       .then(res => {
-        if (res.status === 200) {
-          login(res.data.token);
-          setUserId(res.data.id);
-          setUserName(res.data.name);
-          setUserType(res.data.type);
+        const { status, data } = res.data;
+        if (status === 200) {
+          login(data.token);
+          setUserId(data.id);
+          setUserName(data.name);
+          setUserType(data.type);
 
           window.location.href = '/admin/users';
           setLoading(false);
         } else {
-          alert('Error en el server');
+          alert(`Error en el server: ${JSON.stringify(res.data.error)}`);
           setLoading(false);
         }
-      })
+      });
+  }
+
+  function loadSubmit() {
+    setLoading(true);
+    setTimeout(
+      () => handleSubmit(),
+      2000
+    )
   }
 
   return (
@@ -133,7 +141,7 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={handleSubmit}
+            onClick={loadSubmit}
             disabled={loading}
           >
             {loading ? <CircularProgress /> : "ENTRAR"}

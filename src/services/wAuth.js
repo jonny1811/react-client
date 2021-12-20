@@ -9,7 +9,7 @@ export default function WAuth ({ component: Component, ...rest }) {
 
     useEffect(() => {
         async function verify() {
-            var res = await api.get('/api/users/checktoken', { params: { token: getToken() || 'invalid_token' } });
+            var res = await api.get('/api/session/checktoken', { params: { token: getToken() || 'invalid_token' } });
 
             if (res.data.status === 200) {
                 setLoading(false);

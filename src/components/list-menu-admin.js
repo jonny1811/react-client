@@ -49,7 +49,7 @@ export const secondaryListItems = (
 
 async function confirmLogout() {
   if (window.confirm("Desea cerrar sessión?")) {
-    const res = await api.get("/api/users/logout", { headers: {token: getToken() } });
+    const res = await api.get("/api/session/logout", { headers: {token: getToken() } });
     if (res.status === 200) {
       logout();
       window.location.href = "/admin/login";
