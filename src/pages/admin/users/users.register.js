@@ -12,6 +12,9 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import SaveIcon from '@material-ui/icons/Save';
+
 
 import MenuAdmin from '../../../components/menu-admin';
 import Footer from '../../../components/footer.admin';
@@ -32,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
   },
   container: {
-    paddingTop: theme.spacing(4),
+    paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(4),
   },
   paper: {
@@ -43,7 +46,9 @@ const useStyles = makeStyles((theme) => ({
   },
   formControl: {
     width: '100%'
-  }
+  },
+  btnReturn: { marginBottom: 10 },
+  btnSucess: { backgroundColor: 'green', color: '#fff', '&:hover': { backgroundColor: '#12b912' } },
 }));
 
 export default function UsersRegister() {
@@ -80,6 +85,10 @@ export default function UsersRegister() {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             <Grid item sm={12}>
+              <Button className={classes.btnReturn} variant='contained' href={`/admin/users`}>
+                <ArrowBackIcon />
+                Volver
+              </Button>
               <Paper className={classes.paper}>
                 <h2>Registro de Usuario</h2>
                 <Grid container spacing={3}>
@@ -149,7 +158,8 @@ export default function UsersRegister() {
                     />
                   </Grid>
                   <Grid item xs={12} sm={12}>
-                    <Button variant="contained" onClick={handleSubmit} color="primary">
+                    <Button variant="contained" onClick={handleSubmit} className={classes.btnSucess}>
+                      <SaveIcon />
                       Guardar
                     </Button>
                   </Grid>

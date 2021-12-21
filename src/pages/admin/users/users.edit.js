@@ -13,6 +13,9 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import AddIcon from '@material-ui/icons/Add';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import SaveIcon from '@material-ui/icons/Save';
 
 import MenuAdmin from '../../../components/menu-admin';
 import Footer from '../../../components/footer.admin';
@@ -33,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
   },
   container: {
-    paddingTop: theme.spacing(4),
+    paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(4),
   },
   paper: {
@@ -44,7 +47,10 @@ const useStyles = makeStyles((theme) => ({
   },
   formControl: {
     width: '100%'
-  }
+  },
+  btnSucess: { backgroundColor: 'green', color: '#fff', '&:hover': { backgroundColor: '#12b912' } },
+  btnReturn: { marginBottom: 10, marginRight: 5 },
+  btnCreate: { marginBottom: 10 }
 }));
 
 export default function UsersEdit() {
@@ -97,6 +103,13 @@ export default function UsersEdit() {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             <Grid item sm={12}>
+              <Button className={classes.btnReturn} variant='contained' href={`/admin/users`}>
+                <ArrowBackIcon />
+                Volver</Button>
+              <Button className={classes.btnCreate} variant='contained' color="primary" href={`/admin/users/register`}>
+                <AddIcon />
+                Crear
+              </Button>
               <Paper className={classes.paper}>
                 <h2>Actualización de Usuario</h2>
                 <Grid container spacing={3}>
@@ -166,7 +179,8 @@ export default function UsersEdit() {
                     />
                   </Grid>
                   <Grid item xs={12} sm={12}>
-                    <Button variant="contained" onClick={handleSubmit} color="primary">
+                    <Button variant="contained" onClick={handleSubmit} className={classes.btnSucess}>
+                      <SaveIcon />
                       Guardar
                     </Button>
                   </Grid>

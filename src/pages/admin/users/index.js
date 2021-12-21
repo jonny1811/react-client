@@ -19,6 +19,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Chip from '@material-ui/core/Chip';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+
 
 import api from '../../../services/api';
 import { getNameType, getNameTypeLabel } from '../../../functions/static_data';
@@ -37,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
   },
   container: {
-    paddingTop: theme.spacing(4),
+    paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(4),
   },
   paper: {
@@ -46,17 +51,20 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
     flexDirection: 'column',
   },
+  btnCreate: { marginBottom: 10 }
 }));
 
 export default function UsersList() {
   const classes = useStyles();
 
   const [ users, setUsers ] = useState([]);
+  const [ loading, setLoading ] = useState(true);
 
   useEffect(() => {
     async function loadUsers() {
       const res = await api.get('/api/users');
       setUsers(res.data);
+      setLoading(false);
     }
     loadUsers();
   }, []);
@@ -82,40 +90,52 @@ export default function UsersList() {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             <Grid item sm={12}>
+              <Button className={classes.btnCreate} variant='contained' color="primary" href={`/admin/users/register`}>
+                <AddIcon />
+                Crear
+              </Button>
               <Paper className={classes.paper}>
                 <h2>Lista de Usuarios</h2>
                 <Grid container spacing={3}>
                   <Grid item xs={12} sm={12}>
                     <TableContainer component={Paper}>
-                      <Table className={classes.table} aria-label="simple table">
-                        <TableHead>
-                          <TableRow>
-                            <TableCell>Nombre</TableCell>
-                            <TableCell align="center">Email</TableCell>
-                            <TableCell align="center">Tipo</TableCell>
-                            <TableCell align="center">Fecha de Registro</TableCell>
-                            <TableCell align="right">Opciones</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {users.map((row) => (
-                            <TableRow key={row.id}>
-                              <TableCell component="th" scope="row">
-                                {row.name}
-                              </TableCell>
-                              <TableCell align="center">{row.email}</TableCell>
-                              <TableCell align="center">{<Chip label={getNameType(row.type)} color={getNameTypeLabel(row.type)} />}</TableCell>
-                              <TableCell align="center">{new Date(row.createdAt).toLocaleString()}</TableCell>
-                              <TableCell align="right">
-                                <ButtonGroup color="primary" aria-label="outlined primary button group">
-                                  <Button color="primary" href={`/admin/users/edit/${row.id}`}>Actualizar</Button>
-                                  <Button color="secondary" onClick={() => handleDelete(row.id)}>Borrar</Button>
-                                </ButtonGroup>
-                              </TableCell>
+                      {loading?(<LinearProgress style={{ width: '50%', margin: '60px auto' }} />):(
+                        <Table className={classes.table} aria-label="simple table">
+                          <TableHead>
+                            <TableRow>
+                              <TableCell>Nombre</TableCell>
+                              <TableCell align="center">Email</TableCell>
+                              <TableCell align="center">Tipo</TableCell>
+                              <TableCell align="center">Fecha de Registro</TableCell>
+                              <TableCell align="right">Opciones</TableCell>
                             </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
+                          </TableHead>
+                          <TableBody>
+                            {users.map((row) => (
+                              <TableRow key={row.id}>
+                                <TableCell component="th" scope="row">
+                                  {row.name}
+                                </TableCell>
+                                <TableCell align="center">{row.email}</TableCell>
+                                <TableCell align="center">{<Chip label={getNameType(row.type)} color={getNameTypeLabel(row.type)} />}</TableCell>
+                                <TableCell align="center">{new Date(row.createdAt).toLocaleString()}</TableCell>
+                                <TableCell align="right">
+                                  <ButtonGroup color="primary" aria-label="outlined primary button group">
+                                    <Button variant='contained' color="primary" href={`/admin/users/edit/${row.id}`}>
+                                      <EditIcon />
+                                      Actualizar
+                                    </Button>
+                                    <Button variant='contained' color="secondary" onClick={() => handleDelete(row.id)}>
+                                      <DeleteIcon />
+                                      Borrar
+                                    </Button>
+                                  </ButtonGroup>
+                                </TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      )}
                     </TableContainer>
                   </Grid>
                 </Grid>
