@@ -24,7 +24,6 @@ import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-
 import api from '../../../services/api';
 import { getNameType, getNameTypeLabel } from '../../../functions/static_data';
 
