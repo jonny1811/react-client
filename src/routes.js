@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 // IMPORTS ADMIN
 import Dashboard from './pages/admin/dashboard';
@@ -25,7 +25,9 @@ export default function Router() {
         <BrowserRouter>
             <Switch>
                 {/* Router Client */}
-                <Route path="/" exact component={Home} />
+                <Route path="/" exact component={Home}>
+                    <Redirect to="/admin/login" />
+                </Route>
                 <Route path="/products/:idProduct" exact component={ProductDetails} />
 
                 {/* Router Admin */}
