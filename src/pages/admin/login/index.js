@@ -18,6 +18,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Grid from '@material-ui/core/Grid';
 
 
 import api from '../../../services/api';
@@ -88,7 +89,7 @@ export default function SignIn() {
     setTimeout(
       () => handleSubmit(),
       2000
-    )
+    );
   }
 
   return (
@@ -102,51 +103,57 @@ export default function SignIn() {
           Login
         </Typography>
         
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Escriba su email"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            value={email}
-            onChange={e => setEmail(e.target.value)}
+        <TextField
+          variant="outlined"
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Email"
+          name="email"
+          autoComplete="email"
+          autoFocus
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+        />
+        <FormControl variant="outlined" style={{ width: '100%', marginTop: 10  }}>
+          <InputLabel htmlFor="fieldPassword">Contraseña</InputLabel>
+          <OutlinedInput
+            id="fieldPassword"
+            type={showPassword ? 'text' : 'password'}
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={e => setShowPassword(!showPassword)}
+                  edge="end"
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }
+            labelWidth={160}
           />
-          <FormControl variant="outlined" style={{ width: '100%', marginTop: 10  }}>
-            <InputLabel htmlFor="fieldPassword">Escriba su contraseña</InputLabel>
-            <OutlinedInput
-              id="fieldPassword"
-              type={showPassword ? 'text' : 'password'}
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={e => setShowPassword(!showPassword)}
-                    edge="end"
-                  >
-                    {showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
-              labelWidth={160}
-            />
-          </FormControl>
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            onClick={loadSubmit}
-            disabled={loading}
-          >
-            {loading ? <CircularProgress /> : "ENTRAR"}
-          </Button>
-          
+        </FormControl>
+        <Button
+          fullWidth
+          variant="contained"
+          color="primary"
+          className={classes.submit}
+          onClick={loadSubmit}
+          disabled={loading}
+        >
+          {loading ? <CircularProgress /> : "Entrar"}
+        </Button>
+        <Grid container justifyContent="flex-end">
+          <Grid item>
+            <Link href={"/admin/register"} variant="body2">
+              No tienes aun cuenta? Crear una Cuenta
+            </Link>
+          </Grid>
+        </Grid>
         
       </div>
       <Box mt={8}>
