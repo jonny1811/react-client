@@ -17,6 +17,7 @@ import UsersRegister from './pages/admin/users/users.register';
 import Home from './pages/client/home';
 import ProductDetails from './pages/client/products/products.details';
 import Login from './pages/admin/login';
+import Register from './pages/admin/signup';
 
 import PrivateRoute from './services/wAuth';
 
@@ -33,6 +34,7 @@ export default function Router() {
                 {/* Router Admin */}
                 <PrivateRoute path="/admin" exact component={Dashboard} />
                 <Route path="/admin/login" exact component={Login} />
+                <Route path="/admin/register" exact component={Register} />
 
                 <PrivateRoute path="/admin/products" exact component={Products} />
                 <PrivateRoute path="/admin/products/register" exact component={ProductsRegister} />
